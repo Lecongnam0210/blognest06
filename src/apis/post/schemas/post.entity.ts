@@ -4,12 +4,13 @@ import {
   Column,
   PrimaryGeneratedColumn,
   DeleteDateColumn,
+  PrimaryColumn,
 } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'tb_post' })
 export class UserModel {
-  @PrimaryGeneratedColumn('uuid')
-  id: UUIDVersion = 4;
+  @PrimaryColumn()
+  id: number;
 
   @Column()
   first_name: string;

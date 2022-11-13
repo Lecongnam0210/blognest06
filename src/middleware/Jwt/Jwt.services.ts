@@ -1,11 +1,13 @@
 import { Next, UnauthorizedException } from '@nestjs/common';
 import * as Jwt from 'jsonwebtoken';
-import { SecretKey, ExpiredTime } from '../enum/enum';
+import { SecretKey, ExpiredTime } from '../../lib/enum/enum';
 
 class JwtService {
-  async validateToken({ token }): Promise<any> {
+  async validateToken({ authorization }): Promise<any> {
     try {
-      const isValid = Jwt.verify(token, SecretKey[SecretKey.key]);
+      if (!authorization) throw new UnauthorizedException();
+      const bearerToken = authorization.split(' ')[1];
+      const isValid = Jwt.verify(bearerToken, SecretKey[SecretKey.key]);
       if (!isValid) {
         throw new UnauthorizedException();
       }

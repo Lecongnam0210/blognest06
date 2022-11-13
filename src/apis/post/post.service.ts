@@ -6,9 +6,8 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserModel } from './schemas/user.entity';
-import { User } from './dto/user.interface';
-import { UserFormDTO } from './dto/userDTO.dto';
+import { UserModel } from './schemas/post.entity';
+import { UserFormDTO } from './dto/post.dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -25,7 +24,7 @@ export class UserService {
     return this.usersRepository.findAndCount(query || {});
   }
 
-  async create(user: User): Promise<UserFormDTO> {
+  async create(user: any): Promise<UserFormDTO> {
     const hashPassword = await bcrypt.hash(user.password, 10);
     if (!hashPassword) {
       throw new Error('Hash Password Fail!');

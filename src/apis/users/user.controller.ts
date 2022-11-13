@@ -12,9 +12,11 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { UserFormDTO } from './dto/userDTO.dto';
 import { Request } from 'express';
-import { AuthService } from './guard/auth.guard';
+
+import { AuthService } from '../../middleware/guard/auth.guard';
+import { UserFormDTO } from './dto/userDTO.dto';
+import { LoginDTO } from './dto/userLogin.dto';
 
 @Controller('user')
 export class UserController {
@@ -22,7 +24,7 @@ export class UserController {
 
   @UseGuards(AuthService)
   @Get(':id')
-  findOne(@Param('id') id: ParseUUIDPipe) {
+  getProfile(@Param('id') id: ParseUUIDPipe) {
     return this.userService.findOne(id);
   }
 
@@ -39,10 +41,16 @@ export class UserController {
     };
   }
 
-  @Post()
+  @Post('/register')
   @UsePipes(new ValidationPipe({ skipMissingProperties: true }))
   register(@Body() user: UserFormDTO) {
     return this.userService.create(user);
+  }
+
+  @Post('/login')
+  @UsePipes(new ValidationPipe())
+  login(@Body() loginForm: LoginDTO) {
+    return this.userService.login(loginForm);
   }
 
   updated() {

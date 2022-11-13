@@ -19,14 +19,10 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "typeorm:cli": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli -f ./ormconfig.json",
-    "migrate:create": "npx sequelize-cli migration:generate --name migration-created",
-    "migrate:add": "npx sequelize-cli migration:generate --name migration-created",
-    "migrate:up": "npx sequelize-cli db:migrate",
-    "migrate:down": "npx sequelize-cli db:migrate:undo",
-    "seed:run": "npx sequelize-cli db:seed:all",
-    "seed:undo": "npx sequelize-cli db:seed:undo",
-    "seed:undo:all": "npx sequelize-cli db:seed:undo:all"
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migrate:create": "ts-node ./node_modules/typeorm/cli.js migration:create -n",
+    "migrate:up": "ts-node ./node_modules/typeorm/cli.js migration:run",
+    "migrate:down": "ts-node ./node_modules/typeorm/cli.js migration:revert"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -34,6 +30,7 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/typeorm": "^9.0.1",
+    "@types/bcrypt": "^5.0.0",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/pg": "^8.6.5",
     "bcrypt": "^5.1.0",
@@ -45,7 +42,6 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "sequelize": "^6.25.5",
     "typeorm": "^0.3.10"
   },
   "devDependencies": {

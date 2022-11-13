@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { UserModule } from './user/user.module';
+import { UserModule } from './apis/users/user.module';
 
 @Module({
   imports: [
@@ -19,11 +19,11 @@ import { UserModule } from './user/user.module';
       poolSize: 10,
       connectTimeoutMS: 12000000,
       useUTC: true,
-
+      logger: 'simple-console',
       // module
+      cache: true,
       autoLoadEntities: true,
     }),
-    UserModule,
   ],
 })
 export class AppModule {
